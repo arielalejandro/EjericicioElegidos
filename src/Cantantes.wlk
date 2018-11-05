@@ -55,7 +55,7 @@ object folklore{
 
 object tango{
 	method encajaApariencia(participante){
-		return participante.esMayor() and participante.esAfinado() and participante.viste("sombrero")
+		return participante.esMayor() and participante.afinado() and participante.viste("sombrero")
 	}
 }
 

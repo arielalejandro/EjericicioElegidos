@@ -1,0 +1,48 @@
+import calificadores.*
+import Cantantes.*
+import Elegidos.*
+
+describe "test de elegidos"{
+
+	const cantanteKPOP = new Cantante(afinado = true, edad = 21, cancion = new Cancion(autor = "una Coreana", genero = pop))
+	const tanguero = new Cantante(bailaBien = false, edad = 63, cancion = new Cancion(autor = "Gardel", genero = tango))
+	const cumbiera = new Cantante(bailaBien = true, edad = 24, cancion = new Cancion(autor = "japish", genero = cumbia))
+	const paisano = new Cantante(bailaBien = false, edad = 34, cancion = new Cancion(autor = "Chaquenio", genero = folklore), sexo = 'M', apariencia = ["poncho","botas"])
+	
+	
+	const juezMachirulo = new Machirulo()
+	const juezTradicional = new Tradicionalista()
+	const juezTecnico = new Tecnico()
+	
+	const publicoMachirulo = new PublicoIdentificado(juez = juezMachirulo)
+	
+		fixture{
+			elegidos.agregarJuez(publicoMachirulo)
+			elegidos.agregarJuez(juezTradicional)
+			elegidos.agregarJuez(juezTecnico)
+			elegidos.agregarParticipante(cantanteKPOP)
+			elegidos.agregarParticipante(tanguero)
+			elegidos.agregarParticipante(cumbiera)
+			elegidos.agregarParticipante(paisano)
+		}
+	test "juez machirulo da 10 puntos a cantante de KPOP" {
+		assert.equals(10, juezMachirulo.puntosPara(cantanteKPOP))
+	}	
+	
+	test "publico indentificado con el juez machirulo da 2 puntos a cumbiera"{
+		assert.equals(2, publicoMachirulo.puntosPara(cumbiera))
+	}
+	test "juez tradicional da -5 puntos a la cantante de KPOP"{
+		assert.equals(-5, juezTradicional.puntosPara(cantanteKPOP))
+	}
+	test "la cantante de KPOP recibe en total 7 puntos con publico machirulo, juez tradicional y juez tecnico"{
+		assert.equals(7,elegidos.puntosTotales(cantanteKPOP))
+	}
+	test "tanguero recibe 4 puntos con publico machirulo, juez tradicional y juez tecnico" {
+		assert.equals(4, elegidos.puntosTotales(tanguero))
+	}
+	test "paisano es el elegido"{
+		assert.equals(paisano,elegidos.ganador())
+	}
+
+}
